@@ -39,6 +39,7 @@ def register(user_json, user_id, name, password, email, phone):
         f.close()
         return True
     f.close()
+    print("Registration completed")
     return False
 
 def login(user_json, email, password):
