@@ -202,7 +202,7 @@ def Delete_Student(student_json_file,Mobile_no):
             del content[i]
             f.seek(0)
             f.truncate()
-            json.load(content, f)
+            json.dump(content, f)
             f.close()
             return True
     f.close()
@@ -246,16 +246,18 @@ def Read_all_Units(unit_json_file):
     return content
 
 def Read_Unit_Details(units_json_file,Unit_ID):
-    '''View Unit Details | Return a dictionary of all the details of the unit with the given unit ID'''
+    '''View Unit Details | Return a list of all the details of the unit with the given unit ID'''
     '''Write your code below'''
     f=open(units_json_file, "r+")
     content=json.load(f)
+    details = []
     for i in range(len(content)):
         if content[i]["Unit ID"]==Unit_ID:
             f.close()
-            return content[i]
+            details.append(content[i])
+            return details
     f.close()
-    return {}
+    return details
             
 
 def Update_Unit(unit_json_file,Unit_ID,detail_to_be_updated,new_detail):
@@ -281,7 +283,18 @@ def Update_Unit(unit_json_file,Unit_ID,detail_to_be_updated,new_detail):
 def Delete_Unit(unit_json_file,Unit_ID):
     '''Delete the unit with the given unit id'''
     '''Write your code below'''
-    # 10 mins  20:58 -- 21:08
+    f=open(unit_json_file,'r+')
+    content=json.load(f)
+    for i in range(len(content)):
+       if content[i]["Unit ID"]==Unit_ID:
+            del content[i]
+            f.seek(0)
+            f.truncate()
+            json.dump(content, f)
+            f.close()
+    f.close()
+    return {}
+    
 
 def Enroll_in_module(students_json_file,Mobile_Number,Module_Id):
     '''Enroll a Student | Enroll the student with given Mobile Number in the module with given Module ID || Return True if successful else False'''
@@ -293,7 +306,7 @@ def Enroll_in_module(students_json_file,Mobile_Number,Module_Id):
             content[i]["Modules Enrolled"].append(Module_Id)
             f.seek(0)
             f.truncate()
-            json.dump()
+            json.dump(content, f)
             f.close()
             return True
     f.close()
